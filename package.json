@@ -1,0 +1,25 @@
+{
+  "name": "keyboard",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "lint": "eslint ./main",
+    "lint:fix": "eslint ./main --fix"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DimaTeniuta/keyboard.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DimaTeniuta/keyboard/issues"
+  },
+  "homepage": "https://github.com/DimaTeniuta/keyboard#readme",
+  "devDependencies": {
+    "eslint": "^8.14.0",
+    "eslint-config-airbnb": "^19.0.4"
+  }
+}
