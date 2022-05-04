@@ -10,6 +10,7 @@ ul li {
 body {
   font-family: 'Roboto', sans-serif;
   box-sizing: border-box;
+  background-color: #DEF2F1;
 }
 
 .container {
@@ -39,6 +40,7 @@ body {
 .wrap-text-area {
   display: flex;
   justify-content: center;
+  margin: 20px 0 20px 0;
 }
 
 .wrap-keyboard {
@@ -47,6 +49,7 @@ body {
   padding: 5px;
   border: 1px solid #000000;
   border-radius: 4px;
+  background-color: #8E8D8A;
 }
 
 .keybord {
@@ -76,6 +79,13 @@ body {
   justify-content: center;
   align-items: center;
   position: relative;
+  background-color: #3AAFA9;
+  transition: 0.3s;
+}
+
+.key:hover {
+  cursor: pointer;
+  background-color: #3aafa97c;
 }
 
 .content1-key {
@@ -83,70 +93,73 @@ body {
   position: absolute;
   top: 2px;
   left: 10px;
+  color: #17252A;
 }
 
 .content2-key {
   font-size: 24px;
+  color: #17252A;
 }
 
-.tilde-key {
-  background-color: aqua;
-}
 
 .backspace-key {
   display: flex;
   justify-content: center;
   align-items: center;
   width: 130px;
-  background-color: aqua;
+  background-color: #2b7a78;
 }
 
 .tab-key {
   width: 70px;
-  background-color: aqua;
+  background-color: #2b7a78;
 }
 
 .del-key {
   width: 70px;
-  background-color: aqua;
+  background-color: #2b7a78;
 }
 
 .caps-lock-key {
   width: 130px;
-  background-color: aqua;
+  background-color: #2b7a78;
 }
 
 .enter-key {
   width: 130px;
-  background-color: aqua;
+  background-color: #2b7a78;
 }
 
 .shift-key {
   width: 130px;
-  background-color: aqua;
+  background-color: #2b7a78;
 }
 
 .shift-keyRight {
-  background-color: aqua;
+  background-color: #2b7a78;
 }
 
 .ctrl-key {
   width: 80px;
-  background-color: aqua;
+  background-color: #2b7a78;
 }
 
 .win {
-  background-color: aqua;
+  background-color: #2b7a78;
 }
 
 .alt {
-  background-color: aqua;
+  background-color: #2b7a78;
 }
 
 .up-right-left-down {
-  background-color: aqua;
+  background-color: #2b7a78;
 }
 
 .space-key {
   width: 490px;
+}
+
+.key.active {
+  background-color: #77dad5;
 }

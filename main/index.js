@@ -27,7 +27,7 @@ const keys = {
     key25: ['P', ''],
     key26: ['[', '{'],
     key27: [']', '}'],
-    key28: ['\u002F', '|'],
+    key28: ['\\', '|'],
     key29: ['DEL', ''],
     key30: ['Caps Lock', ''],
     key31: ['A', ''],
@@ -59,7 +59,7 @@ const keys = {
     key57: ['Ctrl', ''],
     key58: ['Win', ''],
     key59: ['Alt', ''],
-    key60: ['space', ''],
+    key60: [' ', ''],
     key61: ['Alt', ''],
     key62: ['Ctrl', ''],
     key63: ['\u2190', ''],
@@ -126,7 +126,7 @@ const keys = {
     key57: ['Ctrl', ''],
     key58: ['Win', ''],
     key59: ['Alt', ''],
-    key60: ['', ''],
+    key60: [' ', ''],
     key61: ['Alt', ''],
     key62: ['Ctrl', ''],
     key63: ['\u2190', ''],
@@ -137,6 +137,7 @@ const keys = {
 
 const body = document.querySelector('body');
 let counKeys = 1;
+let isEn = true;
 
 function createContent() {
   // craate title
@@ -190,9 +191,6 @@ function createContent() {
     listLi.append(p1);
     listLi.append(p2);
     list.append(listLi);
-    if (i === 0) {
-      listLi.classList.add('tilde-key');
-    }
     if (i === 13) {
       listLi.classList.add('backspace-key');
     }
@@ -232,20 +230,85 @@ function createContent() {
   }
 }
 createContent();
-
+// add content in buttons
 const newListEn = document.querySelectorAll('[data-key]');
 function createContentKeys() {
-  newListEn.forEach((el) => {
-    const keysArray = Object.entries(keys.en);
-    keysArray.forEach((element) => {
-      if (el.dataset.key === element[0]) {
-        const p1 = el.firstChild;
-        const p2 = el.lastChild;
-        p1.textContent = `${element[1][1]}`;
-        p2.textContent = `${element[1][0]}`;
-      }
+  isEn = JSON.parse(localStorage.getItem('lang'));
+  if (isEn) {
+    newListEn.forEach((el) => {
+      const keysArray = Object.entries(keys.en);
+      keysArray.forEach((element) => {
+        if (el.dataset.key === element[0]) {
+          const p1 = el.firstChild;
+          const p2 = el.lastChild;
+          p1.textContent = `${element[1][1]}`;
+          p2.textContent = `${element[1][0]}`;
+        }
+      });
     });
-  });
+    localStorage.setItem('lang', JSON.stringify(isEn));
+  } else {
+    newListEn.forEach((el) => {
+      const keysArray = Object.entries(keys.ru);
+      keysArray.forEach((element) => {
+        if (el.dataset.key === element[0]) {
+          const p1 = el.firstChild;
+          const p2 = el.lastChild;
+          p1.textContent = `${element[1][1]}`;
+          p2.textContent = `${element[1][0]}`;
+        }
+      });
+    });
+    localStorage.setItem('lang', JSON.stringify(isEn));
+  }
 }
 
 createContentKeys();
+
+function doubleKeys(func, ...buttons) {
+  const pressing = new Set();
+  document.addEventListener('keydown', (event) => {
+    pressing.add(event.code);
+    for (let i = 0; i < buttons.length; i += 1) {
+      if (!pressing.has(buttons[i])) {
+        return;
+      }
+    }
+    pressing.clear();
+    func();
+  });
+}
+
+function changeLanguage() {
+  if (isEn === true) {
+    isEn = false;
+    localStorage.setItem('lang', JSON.stringify(isEn));
+    newListEn.forEach((el) => {
+      const keysArray = Object.entries(keys.ru);
+      keysArray.forEach((element) => {
+        if (el.dataset.key === element[0]) {
+          const p1 = el.firstChild;
+          const p2 = el.lastChild;
+          p1.textContent = `${element[1][1]}`;
+          p2.textContent = `${element[1][0]}`;
+        }
+      });
+    });
+  } else {
+    isEn = true;
+    localStorage.setItem('lang', JSON.stringify(isEn));
+    newListEn.forEach((el) => {
+      const keysArray = Object.entries(keys.en);
+      keysArray.forEach((element) => {
+        if (el.dataset.key === element[0]) {
+          const p1 = el.firstChild;
+          const p2 = el.lastChild;
+          p1.textContent = `${element[1][1]}`;
+          p2.textContent = `${element[1][0]}`;
+        }
+      });
+    });
+  }
+}
+
+doubleKeys(changeLanguage, 'ShiftLeft', 'AltLeft');
