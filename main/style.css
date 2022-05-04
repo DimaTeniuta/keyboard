@@ -7,6 +7,14 @@ ul li {
   list-style: none;
 }
 
+textarea {
+  resize: none;
+}
+
+textarea:focus{
+  outline: 0;
+}
+
 body {
   font-family: 'Roboto', sans-serif;
   box-sizing: border-box;
@@ -101,8 +109,7 @@ body {
   color: #17252A;
 }
 
-
-.backspace-key {
+.backspace {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -110,53 +117,138 @@ body {
   background-color: #2b7a78;
 }
 
-.tab-key {
+.backspace.active {
+  background-color: #77dad5;
+}
+
+.tab {
   width: 70px;
   background-color: #2b7a78;
 }
 
-.del-key {
+.tab.active {
+  background-color: #77dad5;
+}
+
+.delete {
   width: 70px;
   background-color: #2b7a78;
 }
 
-.caps-lock-key {
+.delete.active {
+  background-color: #77dad5;
+}
+
+.capsLock {
   width: 130px;
   background-color: #2b7a78;
 }
 
-.enter-key {
+.capsLock.active {
+  background-color: #77dad5;
+}
+
+.enter {
   width: 130px;
   background-color: #2b7a78;
 }
 
-.shift-key {
+.enter.active {
+  background-color: #77dad5;
+}
+
+.shiftLeft {
   width: 130px;
   background-color: #2b7a78;
 }
 
-.shift-keyRight {
+.shiftLeft.active {
+  background-color: #77dad5;
+}
+
+.shiftRight {
   background-color: #2b7a78;
 }
 
-.ctrl-key {
+.shiftRight.active {
+  background-color: #77dad5;
+}
+
+.controlLeft {
   width: 80px;
   background-color: #2b7a78;
 }
 
-.win {
+.controlLeft.active {
+  background-color: #77dad5;
+}
+
+.controlRight {
+  width: 80px;
   background-color: #2b7a78;
 }
 
-.alt {
+.controlRight.acrive {
+  background-color: #77dad5;
+}
+
+.metaLeft {
   background-color: #2b7a78;
 }
 
-.up-right-left-down {
+.metaLeft.active {
+  background-color: #77dad5;
+}
+
+.altLeft {
   background-color: #2b7a78;
 }
 
-.space-key {
+.altLeft.active {
+  background-color: #77dad5;
+}
+
+.altRight {
+  background-color: #2b7a78;
+}
+
+.altRight.active {
+  background-color: #77dad5;
+}
+
+.arrowUp {
+  background-color: #2b7a78;
+}
+
+.arrowUp.active {
+  background-color: #77dad5;
+}
+
+.arrowLeft {
+  background-color: #2b7a78;
+}
+
+.arrowLeft.active {
+  background-color: #77dad5;
+}
+
+.arrowDown {
+  background-color: #2b7a78;
+}
+
+.arrowDown.active {
+  background-color: #77dad5;
+}
+
+.arrowRight {
+  background-color: #2b7a78;
+}
+
+.arrowRight.active {
+  background-color: #77dad5;
+}
+
+.space {
   width: 490px;
 }
 
