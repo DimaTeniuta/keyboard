@@ -386,31 +386,68 @@ function mousedownKey(event) {
 keyBoard.addEventListener('mousedown', mousedownKey);
 
 // input text in textarea
+
+const cursor = () => {
+  setTimeout(() => {
+    areaText.focus();
+  }, 0);
+};
+
 function inputText(event) {
   if (
     !(arrDataSpecial.includes(event.target.dataset.special)
     || arrDataSpecial.includes(event.target.parentElement.dataset.special))
   ) {
     if (event.target.classList.contains('key') && (!ShiftLeft.classList.contains('active'))) {
-      areaText.innerHTML += event.target.lastChild.textContent.toLowerCase();
+      areaText.value += event.target.lastChild.textContent.toLowerCase();
+      cursor();
     } else if (event.target.closest('p') && (!ShiftLeft.classList.contains('active'))) {
-      areaText.innerHTML += event.target.parentElement.lastChild.textContent.toLowerCase();
+      cursor();
+      areaText.value += event.target.parentElement.lastChild.textContent.toLowerCase();
     }
 
     if (event.target.classList.contains('key') && (ShiftLeft.classList.contains('active'))) {
       if (!event.target.firstChild.textContent) {
-        areaText.innerHTML += event.target.lastChild.textContent.toUpperCase();
+        cursor();
+        areaText.value += event.target.lastChild.textContent.toUpperCase();
       } else {
-        areaText.innerHTML += event.target.firstChild.textContent;
+        cursor();
+        areaText.value += event.target.firstChild.textContent;
       }
     } else if (event.target.closest('p') && (ShiftLeft.classList.contains('active'))) {
       if (!event.target.parentElement.firstChild.textContent) {
-        areaText.innerHTML += event.target.parentElement.lastChild.textContent.toUpperCase();
+        cursor();
+        areaText.value += event.target.parentElement.lastChild.textContent.toUpperCase();
       } else {
-        areaText.innerHTML += event.target.parentElement.firstChild.textContent;
+        cursor();
+        areaText.value += event.target.parentElement.firstChild.textContent;
       }
     }
   }
 }
 
 keyBoard.addEventListener('mousedown', inputText);
+
+function funcBacksspace(event) {
+  if (event.target.dataset.special === 'Backspace' || event.target.parentElement.dataset.special === 'Backspace') {
+    cursor();
+    const val = areaText.value;
+    const x = document.getElementById('area-text').value.length;
+    const y = 1;
+    const z = x - y;
+    areaText.value = val.slice(0, z);
+  }
+}
+
+keyBoard.addEventListener('mousedown', funcBacksspace);
+
+function funcTab(event) {
+  if (event.target.dataset.special === 'Tab' || event.target.parentElement.dataset.special === 'Tab') {
+    cursor();
+    areaText.selectionStart = areaText.value.length;
+    const val = areaText.value;
+    areaText.value = `${val}    `;
+  }
+}
+
+keyBoard.addEventListener('mousedown', funcTab);
