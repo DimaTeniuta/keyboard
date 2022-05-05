@@ -1,6 +1,7 @@
 * {
   margin: 0;
   padding: 0;
+  user-select: none;
 }
 
 ul li {
@@ -9,6 +10,7 @@ ul li {
 
 textarea {
   resize: none;
+  font-size: 18px;
 }
 
 textarea:focus{

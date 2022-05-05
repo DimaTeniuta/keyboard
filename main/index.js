@@ -134,7 +134,7 @@ const keys = {
     key65: ['\u2192', ''],
   },
 };
-
+const dataKeys = ['Backquote', 'Digit1', 'Digit2', 'Digit3', 'Digit4', 'Digit5', 'Digit6', 'Digit7', 'Digit8', 'Digit9', 'Digit0', 'Minus', 'Equal', 'Backspace', 'Tab', 'KeyQ', 'KeyW', 'KeyE', 'KeyR', 'KeyT', 'KeyY', 'KeyU', 'KeyI', 'KeyO', 'KeyP', 'BracketLeft', 'BracketRight', 'Backslash', 'Delete', 'CapsLock', 'KeyA', 'KeyS', 'KeyD', 'KeyF', 'KeyG', 'KeyH', 'KeyJ', 'KeyK', 'KeyL', 'Semicolon', 'Quote', 'Enter', 'ShiftLeft', 'NumpadDivide', 'KeyZ', 'KeyX', 'KeyC', 'KeyV', 'KeyB', 'KeyN', 'KeyM', 'Comma', 'Period', 'Slash', 'ArrowUp', 'ShiftRight', 'ControlLeft', 'MetaLeft', 'AltLeft', 'Space', 'AltRight', 'ControlRight', 'ArrowLeft', 'ArrowDown', 'ArrowRight'];
 const body = document.querySelector('body');
 let counKeys = 1;
 let isEn = true;
@@ -150,7 +150,7 @@ function createContent() {
   h1Title.textContent = 'Keyboard for windows';
   const keyboardLayout = document.createElement('p');
   keyboardLayout.classList.add('text-title');
-  keyboardLayout.textContent = '(Shift + Alt) - switch keyboard layout';
+  keyboardLayout.textContent = '(ShiftLeft + AltLeft) - switch keyboard layout';
   body.append(container);
   title.append(h1Title);
   title.append(keyboardLayout);
@@ -159,15 +159,19 @@ function createContent() {
   const wrapArea = document.createElement('div');
   wrapArea.classList.add('wrap-text-area');
   const textAreaDiv = document.createElement('div');
+  const form = document.createElement('form');
+  form.id = 'frm';
+  textAreaDiv.append(form);
   textAreaDiv.classList.add('text-area');
   const textArea = document.createElement('textarea');
-  textArea.classList.add('text-area');
+  textArea.autofocus = 'autofocus';
   textArea.name = 'area';
   textArea.id = 'area-text';
   textArea.cols = '100';
   textArea.rows = '10';
+  form.append(textArea);
   wrapArea.append(textAreaDiv);
-  textAreaDiv.append(textArea);
+  // textAreaDiv.append(textArea);
   container.append(wrapArea);
   // create keyboard
   const wrapKeyboard = document.createElement('div');
@@ -245,6 +249,17 @@ function createContent() {
   }
 }
 createContent();
+
+const listButtons = document.querySelectorAll('.key');
+
+function addDataSetForButtons() {
+  for (let i = 0; i < listButtons.length; i += 1) {
+    listButtons[i].setAttribute('data-special', `${dataKeys[i]}`);
+  }
+}
+
+addDataSetForButtons();
+
 // add content in buttons
 const newListEn = document.querySelectorAll('[data-key]');
 function createContentKeys() {
@@ -292,6 +307,9 @@ function doubleKeys(func, ...buttons) {
     pressing.clear();
     func();
   });
+  document.addEventListener('keyup', () => {
+    pressing.clear();
+  });
 }
 
 function changeLanguage() {
@@ -326,32 +344,73 @@ function changeLanguage() {
   }
 }
 
-doubleKeys(changeLanguage, 'ShiftLeft', 'AltLeft');
+doubleKeys(changeLanguage, 'ControlLeft', 'AltLeft');
 
 // add focus for buttons
-const listButtons = document.querySelectorAll('.key');
-const specialButtons = document.querySelectorAll('.backspace, .tab, .delete, .capsLock, .shiftLeft, .arrowUp, .shiftRight, .controlLeft, .metaLeft, .altLeft, .altRight, .controlRight, .arrowLeft, .arrowDown, .arrowRight');
-
-function addDataSetForSpecialButtons() {
-  specialButtons.forEach((el) => {
-    el.setAttribute('data-special', `${el.className.slice(4)[0].toUpperCase() + el.className.slice(5)}`);
-  });
-}
-addDataSetForSpecialButtons();
-
 document.addEventListener('keydown', (event) => {
   listButtons.forEach((el) => {
-    if (el.lastChild.textContent === event.key.toUpperCase()) {
-      el.classList.add('active');
-    } else if (el.dataset.special === event.code) {
-      el.classList.add('active');
-    } else if (el.firstChild.textContent === event.key.toUpperCase()) {
+    if (el.dataset.special === event.code) {
       el.classList.add('active');
     }
   });
-});
-document.addEventListener('keyup', () => {
-  listButtons.forEach((el) => {
-    el.classList.remove('active');
+  document.addEventListener('keyup', () => {
+    listButtons.forEach((el) => {
+      el.classList.remove('active');
+    });
   });
 });
+
+// textarea
+const areaText = document.getElementById('area-text');
+const keyBoard = document.querySelector('.list');
+const ShiftLeft = document.querySelector('.shiftLeft');
+const arrDataSpecial = ['Tab', 'CapsLock', 'ShiftLeft', 'ControlLeft', 'MetaLeft', 'AltLeft', 'AltRight', 'ControlRight', 'ShiftRight', 'Enter', 'Delete', 'Backspace'];
+let arrKeys = [];
+
+function mousedownKey(event) {
+  if (event.target.classList.contains('key')) {
+    event.target.classList.add('active');
+    arrKeys.push(event.target);
+  } else if (event.target.closest('p')) {
+    event.target.parentElement.classList.add('active');
+    arrKeys.push(event.target.parentElement);
+  }
+  document.addEventListener('mouseup', () => {
+    arrKeys.forEach((el) => {
+      el.classList.remove('active');
+    });
+    arrKeys = [];
+  });
+}
+
+keyBoard.addEventListener('mousedown', mousedownKey);
+
+// input text in textarea
+function inputText(event) {
+  if (
+    !(arrDataSpecial.includes(event.target.dataset.special)
+    || arrDataSpecial.includes(event.target.parentElement.dataset.special))
+  ) {
+    if (event.target.classList.contains('key') && (!ShiftLeft.classList.contains('active'))) {
+      areaText.innerHTML += event.target.lastChild.textContent.toLowerCase();
+    } else if (event.target.closest('p') && (!ShiftLeft.classList.contains('active'))) {
+      areaText.innerHTML += event.target.parentElement.lastChild.textContent.toLowerCase();
+    }
+
+    if (event.target.classList.contains('key') && (ShiftLeft.classList.contains('active'))) {
+      if (!event.target.firstChild.textContent) {
+        areaText.innerHTML += event.target.lastChild.textContent.toUpperCase();
+      } else {
+        areaText.innerHTML += event.target.firstChild.textContent;
+      }
+    } else if (event.target.closest('p') && (ShiftLeft.classList.contains('active'))) {
+      if (!event.target.parentElement.firstChild.textContent) {
+        areaText.innerHTML += event.target.parentElement.lastChild.textContent.toUpperCase();
+      } else {
+        areaText.innerHTML += event.target.parentElement.firstChild.textContent;
+      }
+    }
+  }
+}
+
+keyBoard.addEventListener('mousedown', inputText);
