@@ -171,7 +171,6 @@ function createContent() {
   textArea.rows = '10';
   form.append(textArea);
   wrapArea.append(textAreaDiv);
-  // textAreaDiv.append(textArea);
   container.append(wrapArea);
   // create keyboard
   const wrapKeyboard = document.createElement('div');
@@ -350,30 +349,48 @@ doubleKeys(changeLanguage, 'ControlLeft', 'AltLeft');
 document.addEventListener('keydown', (event) => {
   listButtons.forEach((el) => {
     if (el.dataset.special === event.code) {
-      el.classList.add('active');
+      if (!(event.code === 'ShiftLeft' || event.code === 'ShiftRight' || event.code === 'CapsLock')) {
+        el.classList.add('active');
+      }
     }
   });
   document.addEventListener('keyup', () => {
     listButtons.forEach((el) => {
-      el.classList.remove('active');
+      if (!(el.dataset.special === 'ShiftLeft' || el.dataset.special === 'ShiftRight' || el.dataset.special === 'CapsLock')) {
+        el.classList.remove('active');
+      }
     });
   });
 });
 
-// textarea
+// add class 'active' for click
 const areaText = document.getElementById('area-text');
 const keyBoard = document.querySelector('.list');
-const ShiftLeft = document.querySelector('.shiftLeft');
+const shiftLeft = document.querySelector('.shiftLeft');
+const shiftRight = document.querySelector('.shiftRight');
+const capsLock = document.querySelector('.capsLock');
 const arrDataSpecial = ['Tab', 'CapsLock', 'ShiftLeft', 'ControlLeft', 'MetaLeft', 'AltLeft', 'AltRight', 'ControlRight', 'ShiftRight', 'Enter', 'Delete', 'Backspace'];
 let arrKeys = [];
 
 function mousedownKey(event) {
   if (event.target.classList.contains('key')) {
-    event.target.classList.add('active');
-    arrKeys.push(event.target);
+    if (!(
+      event.target.dataset.special === 'ShiftLeft'
+      || event.target.dataset.special === 'ShiftRight'
+      || event.target.dataset.special === 'CapsLock'
+    )) {
+      event.target.classList.add('active');
+      arrKeys.push(event.target);
+    }
   } else if (event.target.closest('p')) {
-    event.target.parentElement.classList.add('active');
-    arrKeys.push(event.target.parentElement);
+    if (!(
+      event.target.parentElement.dataset.special === 'ShiftLeft'
+      || event.target.parentElement.dataset.special === 'ShiftRight'
+      || event.target.parentElement.dataset.special === 'CapsLock'
+    )) {
+      event.target.parentElement.classList.add('active');
+      arrKeys.push(event.target.parentElement);
+    }
   }
   document.addEventListener('mouseup', () => {
     arrKeys.forEach((el) => {
@@ -385,8 +402,77 @@ function mousedownKey(event) {
 
 keyBoard.addEventListener('mousedown', mousedownKey);
 
-// input text in textarea
+function clickMouseCapslock(event) {
+  if (event.target.dataset.special === 'CapsLock') {
+    capsLock.classList.toggle('active');
+  } else if (event.target.parentElement.dataset.special === 'CapsLock') {
+    capsLock.classList.toggle('active');
+  }
+}
 
+keyBoard.addEventListener('mousedown', clickMouseCapslock);
+
+function mousedownMouseShiftLeft(event) {
+  if (event.target.dataset.special === 'ShiftLeft' && !shiftLeft.classList.contains('active')) {
+    shiftLeft.classList.add('active');
+  } else if (event.target.parentElement.dataset.special === 'ShiftLeft' && !shiftLeft.classList.contains('active')) {
+    shiftLeft.classList.add('active');
+  }
+}
+
+keyBoard.addEventListener('mousedown', mousedownMouseShiftLeft);
+
+function mousedownMouseShiftRight(event) {
+  if (event.target.dataset.special === 'ShiftRight' && !shiftRight.classList.contains('active')) {
+    shiftRight.classList.add('active');
+  } else if (event.target.parentElement.dataset.special === 'ShiftRight' && !shiftRight.classList.contains('active')) {
+    shiftRight.classList.add('active');
+  }
+}
+
+keyBoard.addEventListener('mousedown', mousedownMouseShiftRight);
+
+function clickMouseShiftLeftremove(event) {
+  if (event.target.dataset.special === 'ShiftLeft' && shiftLeft.classList.contains('active')) {
+    shiftLeft.classList.remove('active');
+  } else if (event.target.parentElement.dataset.special === 'ShiftLeft' && shiftLeft.classList.contains('active')) {
+    shiftLeft.classList.remove('active');
+  }
+}
+
+keyBoard.addEventListener('click', clickMouseShiftLeftremove);
+
+function clickMouseShiftRightremove(event) {
+  if (event.target.dataset.special === 'ShiftRight' && shiftRight.classList.contains('active')) {
+    shiftRight.classList.remove('active');
+  } else if (event.target.parentElement.dataset.special === 'ShiftRight' && shiftRight.classList.contains('active')) {
+    shiftRight.classList.remove('active');
+  }
+}
+
+keyBoard.addEventListener('click', clickMouseShiftRightremove);
+
+function clickMouseShiftLeftDouble(event) {
+  if (event.target.dataset.special === 'ShiftLeft') {
+    shiftLeft.classList.toggle('active');
+  } else if (event.target.parentElement.dataset.special === 'ShiftLeft') {
+    shiftLeft.classList.toggle('active');
+  }
+}
+
+keyBoard.addEventListener('dblclick', clickMouseShiftLeftDouble);
+
+function clickMouseShiftRightDouble(event) {
+  if (event.target.dataset.special === 'ShiftRight') {
+    shiftRight.classList.toggle('active');
+  } else if (event.target.parentElement.dataset.special === 'ShiftRight') {
+    shiftRight.classList.toggle('active');
+  }
+}
+
+keyBoard.addEventListener('dblclick', clickMouseShiftRightDouble);
+
+// input text in textarea with mouse
 const cursor = () => {
   setTimeout(() => {
     areaText.focus();
@@ -398,29 +484,63 @@ function inputText(event) {
     !(arrDataSpecial.includes(event.target.dataset.special)
     || arrDataSpecial.includes(event.target.parentElement.dataset.special))
   ) {
-    if (event.target.classList.contains('key') && (!ShiftLeft.classList.contains('active'))) {
-      areaText.value += event.target.lastChild.textContent.toLowerCase();
-      cursor();
-    } else if (event.target.closest('p') && (!ShiftLeft.classList.contains('active'))) {
-      cursor();
-      areaText.value += event.target.parentElement.lastChild.textContent.toLowerCase();
-    }
-
-    if (event.target.classList.contains('key') && (ShiftLeft.classList.contains('active'))) {
-      if (!event.target.firstChild.textContent) {
+    if (!capsLock.classList.contains('active')) {
+      if (event.target.classList.contains('key') && (!shiftLeft.classList.contains('active')) && (!shiftLeft.classList.contains('active'))) {
+        areaText.value += event.target.lastChild.textContent.toLowerCase();
         cursor();
-        areaText.value += event.target.lastChild.textContent.toUpperCase();
-      } else {
+      } else if (event.target.closest('p') && (!shiftLeft.classList.contains('active'))) {
         cursor();
-        areaText.value += event.target.firstChild.textContent;
+        areaText.value += event.target.parentElement.lastChild.textContent.toLowerCase();
       }
-    } else if (event.target.closest('p') && (ShiftLeft.classList.contains('active'))) {
-      if (!event.target.parentElement.firstChild.textContent) {
+
+      if (event.target.classList.contains('key') && (shiftLeft.classList.contains('active'))) {
+        if (!event.target.firstChild.textContent) {
+          cursor();
+          areaText.value += event.target.lastChild.textContent.toUpperCase();
+        } else {
+          cursor();
+          areaText.value += event.target.firstChild.textContent;
+        }
+      } else if (
+        (event.target.closest('p') && (shiftLeft.classList.contains('active')))
+        || (event.target.closest('p') && (shiftRight.classList.contains('active')))
+      ) {
+        if (!event.target.parentElement.firstChild.textContent) {
+          cursor();
+          areaText.value += event.target.parentElement.lastChild.textContent.toUpperCase();
+        } else {
+          cursor();
+          areaText.value += event.target.parentElement.firstChild.textContent;
+        }
+      }
+    } else {
+      if (event.target.classList.contains('key') && (!shiftLeft.classList.contains('active')) && (!shiftLeft.classList.contains('active'))) {
+        areaText.value += event.target.lastChild.textContent;
         cursor();
-        areaText.value += event.target.parentElement.lastChild.textContent.toUpperCase();
-      } else {
+      } else if (event.target.closest('p') && (!shiftLeft.classList.contains('active'))) {
         cursor();
-        areaText.value += event.target.parentElement.firstChild.textContent;
+        areaText.value += event.target.parentElement.lastChild.textContent;
+      }
+
+      if (
+        (event.target.classList.contains('key') && (shiftLeft.classList.contains('active')))
+        || (event.target.classList.contains('key') && (shiftRight.classList.contains('active')))
+      ) {
+        if (!event.target.firstChild.textContent) {
+          cursor();
+          areaText.value += event.target.lastChild.textContent.toLowerCase();
+        } else {
+          cursor();
+          areaText.value += event.target.firstChild.textContent;
+        }
+      } else if (event.target.closest('p') && (shiftLeft.classList.contains('active'))) {
+        if (!event.target.parentElement.firstChild.textContent) {
+          cursor();
+          areaText.value += event.target.parentElement.lastChild.textContent.toLowerCase();
+        } else {
+          cursor();
+          areaText.value += event.target.parentElement.firstChild.textContent;
+        }
       }
     }
   }
@@ -428,6 +548,7 @@ function inputText(event) {
 
 keyBoard.addEventListener('mousedown', inputText);
 
+// function for Backspace
 function funcBacksspace(event) {
   if (event.target.dataset.special === 'Backspace' || event.target.parentElement.dataset.special === 'Backspace') {
     cursor();
@@ -441,6 +562,7 @@ function funcBacksspace(event) {
 
 keyBoard.addEventListener('mousedown', funcBacksspace);
 
+// function for Tab
 function funcTab(event) {
   if (event.target.dataset.special === 'Tab' || event.target.parentElement.dataset.special === 'Tab') {
     cursor();
@@ -451,3 +573,40 @@ function funcTab(event) {
 }
 
 keyBoard.addEventListener('mousedown', funcTab);
+
+// input text in textarea with keyboard
+document.addEventListener('keydown', (event) => {
+  if (event.code === 'ShiftLeft') {
+    shiftLeft.classList.add('active');
+  }
+  if (event.code === 'ShiftRight') {
+    shiftRight.classList.add('active');
+  }
+  if (event.code === 'CapsLock') {
+    capsLock.classList.toggle('active');
+  }
+});
+
+document.addEventListener('keyup', (event) => {
+  if (event.code === 'ShiftLeft') {
+    shiftLeft.classList.remove('active');
+  }
+  if (event.code === 'ShiftRight') {
+    shiftRight.classList.remove('active');
+  }
+});
+
+// document.addEventListener('keydown', (event) => {
+
+//     if (
+//       !(arrDataSpecial.includes(event.code)
+//     || arrDataSpecial.includes(event.code))
+//     ) {
+//       console.log(listButtons);
+//       listButtons.forEach((el) => {
+//         if (el.dataset.special === event.code && (!ShiftLeft.classList.contains('active'))) {
+//           console.log(111);
+//         }
+//       });
+//     }
+// });
