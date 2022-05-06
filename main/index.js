@@ -150,9 +150,13 @@ function createContent() {
   h1Title.textContent = 'Keyboard for windows';
   const keyboardLayout = document.createElement('p');
   keyboardLayout.classList.add('text-title');
-  keyboardLayout.textContent = '(ShiftLeft + AltLeft) - switch keyboard layout';
+  keyboardLayout.textContent = '(CtrlLeft + AltLeft) - switch keyboard layout (use double click)';
+  const shiftDicribe = document.createElement('p');
+  shiftDicribe.classList.add('text-title');
+  shiftDicribe.textContent = 'ShiftLeft or ShiftRight can be used with double click.';
   body.append(container);
   title.append(h1Title);
+  title.append(shiftDicribe);
   title.append(keyboardLayout);
   container.append(title);
   // create textarea
@@ -292,6 +296,13 @@ function createContentKeys() {
   }
 }
 
+const areaText = document.getElementById('area-text');
+const showCursor = () => {
+  setTimeout(() => {
+    areaText.focus();
+  }, 0);
+};
+
 createContentKeys();
 // change language
 function doubleKeys(func, ...buttons) {
@@ -347,6 +358,7 @@ doubleKeys(changeLanguage, 'ControlLeft', 'AltLeft');
 
 // add focus for buttons
 document.addEventListener('keydown', (event) => {
+  event.preventDefault();
   listButtons.forEach((el) => {
     if (el.dataset.special === event.code) {
       if (!(event.code === 'ShiftLeft' || event.code === 'ShiftRight' || event.code === 'CapsLock')) {
@@ -355,6 +367,7 @@ document.addEventListener('keydown', (event) => {
     }
   });
   document.addEventListener('keyup', () => {
+    event.preventDefault();
     listButtons.forEach((el) => {
       if (!(el.dataset.special === 'ShiftLeft' || el.dataset.special === 'ShiftRight' || el.dataset.special === 'CapsLock')) {
         el.classList.remove('active');
@@ -364,7 +377,6 @@ document.addEventListener('keydown', (event) => {
 });
 
 // add class 'active' for click
-const areaText = document.getElementById('area-text');
 const keyBoard = document.querySelector('.list');
 const shiftLeft = document.querySelector('.shiftLeft');
 const shiftRight = document.querySelector('.shiftRight');
@@ -472,86 +484,24 @@ function clickMouseShiftRightDouble(event) {
 
 keyBoard.addEventListener('dblclick', clickMouseShiftRightDouble);
 
-// input text in textarea with mouse
-const cursor = () => {
-  setTimeout(() => {
-    areaText.focus();
-  }, 0);
-};
-
-function inputText(event) {
-  if (
-    !(arrDataSpecial.includes(event.target.dataset.special)
-    || arrDataSpecial.includes(event.target.parentElement.dataset.special))
-  ) {
-    if (!capsLock.classList.contains('active')) {
-      if (event.target.classList.contains('key') && (!shiftLeft.classList.contains('active')) && (!shiftLeft.classList.contains('active'))) {
-        areaText.value += event.target.lastChild.textContent.toLowerCase();
-        cursor();
-      } else if (event.target.closest('p') && (!shiftLeft.classList.contains('active'))) {
-        cursor();
-        areaText.value += event.target.parentElement.lastChild.textContent.toLowerCase();
-      }
-
-      if (event.target.classList.contains('key') && (shiftLeft.classList.contains('active'))) {
-        if (!event.target.firstChild.textContent) {
-          cursor();
-          areaText.value += event.target.lastChild.textContent.toUpperCase();
-        } else {
-          cursor();
-          areaText.value += event.target.firstChild.textContent;
-        }
-      } else if (
-        (event.target.closest('p') && (shiftLeft.classList.contains('active')))
-        || (event.target.closest('p') && (shiftRight.classList.contains('active')))
-      ) {
-        if (!event.target.parentElement.firstChild.textContent) {
-          cursor();
-          areaText.value += event.target.parentElement.lastChild.textContent.toUpperCase();
-        } else {
-          cursor();
-          areaText.value += event.target.parentElement.firstChild.textContent;
-        }
-      }
-    } else {
-      if (event.target.classList.contains('key') && (!shiftLeft.classList.contains('active')) && (!shiftLeft.classList.contains('active'))) {
-        areaText.value += event.target.lastChild.textContent;
-        cursor();
-      } else if (event.target.closest('p') && (!shiftLeft.classList.contains('active'))) {
-        cursor();
-        areaText.value += event.target.parentElement.lastChild.textContent;
-      }
-
-      if (
-        (event.target.classList.contains('key') && (shiftLeft.classList.contains('active')))
-        || (event.target.classList.contains('key') && (shiftRight.classList.contains('active')))
-      ) {
-        if (!event.target.firstChild.textContent) {
-          cursor();
-          areaText.value += event.target.lastChild.textContent.toLowerCase();
-        } else {
-          cursor();
-          areaText.value += event.target.firstChild.textContent;
-        }
-      } else if (event.target.closest('p') && (shiftLeft.classList.contains('active'))) {
-        if (!event.target.parentElement.firstChild.textContent) {
-          cursor();
-          areaText.value += event.target.parentElement.lastChild.textContent.toLowerCase();
-        } else {
-          cursor();
-          areaText.value += event.target.parentElement.firstChild.textContent;
-        }
-      }
-    }
+// function for add text in current cursor value
+function addTextInCurrentArea(text) {
+  const start = areaText.selectionStart;
+  const end = areaText.selectionEnd;
+  const finishText = `${areaText.value.substring(0, start)}${text}${areaText.value.substring(end)}`;
+  areaText.value = finishText;
+  areaText.focus();
+  if (start === end) {
+    areaText.selectionEnd = end + text.length;
+  } else {
+    areaText.selectionEnd = end;
   }
 }
-
-keyBoard.addEventListener('mousedown', inputText);
 
 // function for Backspace
 function funcBacksspace(event) {
   if (event.target.dataset.special === 'Backspace' || event.target.parentElement.dataset.special === 'Backspace') {
-    cursor();
+    showCursor();
     const val = areaText.value;
     const x = document.getElementById('area-text').value.length;
     const y = 1;
@@ -565,7 +515,7 @@ keyBoard.addEventListener('mousedown', funcBacksspace);
 // function for Tab
 function funcTab(event) {
   if (event.target.dataset.special === 'Tab' || event.target.parentElement.dataset.special === 'Tab') {
-    cursor();
+    showCursor();
     areaText.selectionStart = areaText.value.length;
     const val = areaText.value;
     areaText.value = `${val}    `;
@@ -596,17 +546,132 @@ document.addEventListener('keyup', (event) => {
   }
 });
 
-// document.addEventListener('keydown', (event) => {
+// input text in textarea with mouse
+function inputText(event) {
+  if (
+    !(arrDataSpecial.includes(event.target.dataset.special)
+    || arrDataSpecial.includes(event.target.parentElement.dataset.special))
+  ) {
+    if (!capsLock.classList.contains('active')) {
+      if (
+        (event.target.classList.contains('key') && (!shiftLeft.classList.contains('active')))
+        && (event.target.classList.contains('key') && (!shiftRight.classList.contains('active')))
+      ) {
+        areaText.value += event.target.lastChild.textContent.toLowerCase();
+        showCursor();
+      } else if (event.target.closest('p') && (!shiftLeft.classList.contains('active'))) {
+        showCursor();
+        areaText.value += event.target.parentElement.lastChild.textContent.toLowerCase();
+      }
 
-//     if (
-//       !(arrDataSpecial.includes(event.code)
-//     || arrDataSpecial.includes(event.code))
-//     ) {
-//       console.log(listButtons);
-//       listButtons.forEach((el) => {
-//         if (el.dataset.special === event.code && (!ShiftLeft.classList.contains('active'))) {
-//           console.log(111);
-//         }
-//       });
-//     }
-// });
+      if (
+        (event.target.classList.contains('key') && (shiftLeft.classList.contains('active')))
+        || (event.target.classList.contains('key') && (shiftRight.classList.contains('active')))
+      ) {
+        if (!event.target.firstChild.textContent) {
+          showCursor();
+          areaText.value += event.target.textContent.toUpperCase();
+        } else {
+          showCursor();
+          areaText.value += event.target.firstChild.textContent;
+        }
+      } else if (
+        (event.target.closest('p') && (shiftLeft.classList.contains('active')))
+        || (event.target.closest('p') && (shiftRight.classList.contains('active')))
+      ) {
+        if (!event.target.parentElement.firstChild.textContent) {
+          showCursor();
+          areaText.value += event.target.parentElement.lastChild.textContent.toUpperCase();
+        } else {
+          showCursor();
+          areaText.value += event.target.parentElement.firstChild.textContent;
+        }
+      }
+    } else {
+      if (
+        (event.target.classList.contains('key') && (!shiftLeft.classList.contains('active')))
+        && (event.target.classList.contains('key') && (!shiftRight.classList.contains('active')))
+      ) {
+        areaText.value += event.target.lastChild.textContent;
+        showCursor();
+      } else if (
+        (event.target.closest('p') && (!shiftLeft.classList.contains('active')))
+        && (event.target.closest('p') && (!shiftRight.classList.contains('active')))
+      ) {
+        showCursor();
+        areaText.value += event.target.parentElement.lastChild.textContent;
+      }
+
+      if (
+        (event.target.classList.contains('key') && (shiftLeft.classList.contains('active')))
+        || (event.target.classList.contains('key') && (shiftRight.classList.contains('active')))
+      ) {
+        if (!event.target.firstChild.textContent) {
+          showCursor();
+          areaText.value += event.target.lastChild.textContent.toLowerCase();
+        } else {
+          showCursor();
+          areaText.value += event.target.firstChild.textContent;
+        }
+      } else if (
+        (event.target.closest('p') && (shiftLeft.classList.contains('active')))
+        || (event.target.closest('p') && (shiftRight.classList.contains('active')))
+      ) {
+        if (!event.target.parentElement.firstChild.textContent) {
+          showCursor();
+          areaText.value += event.target.parentElement.lastChild.textContent.toLowerCase();
+        } else {
+          showCursor();
+          areaText.value += event.target.parentElement.firstChild.textContent;
+        }
+      }
+    }
+  }
+}
+
+keyBoard.addEventListener('mousedown', inputText);
+
+// Add value in textarea use keyboard
+document.addEventListener('keydown', (event) => {
+  event.preventDefault();
+  if (!(arrDataSpecial.includes(event.code))) {
+    if (!capsLock.classList.contains('active')) {
+      listButtons.forEach((el) => {
+        if (
+          el.dataset.special === event.code && (!shiftLeft.classList.contains('active'))
+          && (!shiftRight.classList.contains('active'))
+        ) {
+          addTextInCurrentArea(el.lastChild.textContent.toLowerCase());
+        } else if (
+          (el.dataset.special === event.code && (shiftLeft.classList.contains('active')))
+          || (el.dataset.special === event.code && (shiftRight.classList.contains('active')))
+        ) {
+          if (!el.firstChild.textContent) {
+            addTextInCurrentArea(el.lastChild.textContent.toUpperCase());
+          } else {
+            addTextInCurrentArea(el.firstChild.textContent);
+          }
+        }
+      });
+    } else {
+      listButtons.forEach((el) => {
+        if (
+          el.dataset.special === event.code
+          && (!shiftLeft.classList.contains('active'))
+          && (!shiftLeft.classList.contains('active'))
+        ) {
+          addTextInCurrentArea(el.lastChild.textContent.toUpperCase());
+        } else if (
+          (el.dataset.special === event.code && (shiftLeft.classList.contains('active')))
+          || (el.dataset.special === event.code && (shiftRight.classList.contains('active')))
+        ) {
+          if (!el.firstChild.textContent) {
+            addTextInCurrentArea(el.lastChild.textContent.toLowerCase());
+          } else {
+            addTextInCurrentArea(el.firstChild.textContent.toLowerCase());
+          }
+        }
+      });
+    }
+  }
+});
