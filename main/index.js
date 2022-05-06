@@ -490,7 +490,6 @@ function addTextInCurrentArea(text) {
   const end = areaText.selectionEnd;
   const finishText = `${areaText.value.substring(0, start)}${text}${areaText.value.substring(end)}`;
   areaText.value = finishText;
-  areaText.focus();
   if (start === end) {
     areaText.selectionEnd = end + text.length;
   } else {
@@ -498,15 +497,24 @@ function addTextInCurrentArea(text) {
   }
 }
 
-// function for Backspace
+// function for delete text befor cursor use mouse
+function deleteElUseBackspace() {
+  const start = areaText.selectionStart;
+  const end = areaText.selectionEnd;
+  const finishText = `${areaText.value.substring(0, start - 1)}${areaText.value.substring(end)}`;
+  areaText.value = finishText;
+  if (start === end) {
+    areaText.selectionEnd = end - 1;
+  } else {
+    areaText.selectionEnd = end;
+  }
+}
+
+// function for Backspace use mouse
 function funcBacksspace(event) {
   if (event.target.dataset.special === 'Backspace' || event.target.parentElement.dataset.special === 'Backspace') {
     showCursor();
-    const val = areaText.value;
-    const x = document.getElementById('area-text').value.length;
-    const y = 1;
-    const z = x - y;
-    areaText.value = val.slice(0, z);
+    deleteElUseBackspace();
   }
 }
 
@@ -516,15 +524,44 @@ keyBoard.addEventListener('mousedown', funcBacksspace);
 function funcTab(event) {
   if (event.target.dataset.special === 'Tab' || event.target.parentElement.dataset.special === 'Tab') {
     showCursor();
-    areaText.selectionStart = areaText.value.length;
-    const val = areaText.value;
-    areaText.value = `${val}    `;
+    const tab = '  ';
+    addTextInCurrentArea(tab);
   }
 }
 
 keyBoard.addEventListener('mousedown', funcTab);
 
-// input text in textarea with keyboard
+// function for delete text after cursor use mouse
+function deleteElUseDel() {
+  const start = areaText.selectionStart;
+  const end = areaText.selectionEnd;
+  const finishText = `${areaText.value.substring(0, start)}${areaText.value.substring(end).slice(1)}`;
+  areaText.value = finishText;
+  areaText.selectionEnd = end;
+}
+
+// function for Del
+function funcDel(event) {
+  if (event.target.dataset.special === 'Delete' || event.target.parentElement.dataset.special === 'Delete') {
+    showCursor();
+    deleteElUseDel();
+  }
+}
+
+keyBoard.addEventListener('mousedown', funcDel);
+
+// function for Enter
+function funcEnter(event) {
+  if (event.target.dataset.special === 'Enter' || event.target.parentElement.dataset.special === 'Enter') {
+    const ent = '\n';
+    showCursor();
+    addTextInCurrentArea(ent);
+  }
+}
+
+keyBoard.addEventListener('mousedown', funcEnter);
+
+// add 'active' class use keyboard for shift and capslock
 document.addEventListener('keydown', (event) => {
   if (event.code === 'ShiftLeft') {
     shiftLeft.classList.add('active');
@@ -546,7 +583,7 @@ document.addEventListener('keyup', (event) => {
   }
 });
 
-// input text in textarea with mouse
+// input text in textarea use mouse
 function inputText(event) {
   if (
     !(arrDataSpecial.includes(event.target.dataset.special)
@@ -557,11 +594,11 @@ function inputText(event) {
         (event.target.classList.contains('key') && (!shiftLeft.classList.contains('active')))
         && (event.target.classList.contains('key') && (!shiftRight.classList.contains('active')))
       ) {
-        areaText.value += event.target.lastChild.textContent.toLowerCase();
+        addTextInCurrentArea(event.target.lastChild.textContent.toLowerCase());
         showCursor();
       } else if (event.target.closest('p') && (!shiftLeft.classList.contains('active'))) {
         showCursor();
-        areaText.value += event.target.parentElement.lastChild.textContent.toLowerCase();
+        addTextInCurrentArea(event.target.parentElement.lastChild.textContent.toLowerCase());
       }
 
       if (
@@ -570,10 +607,10 @@ function inputText(event) {
       ) {
         if (!event.target.firstChild.textContent) {
           showCursor();
-          areaText.value += event.target.textContent.toUpperCase();
+          addTextInCurrentArea(event.target.textContent.toUpperCase());
         } else {
           showCursor();
-          areaText.value += event.target.firstChild.textContent;
+          addTextInCurrentArea(event.target.firstChild.textContent);
         }
       } else if (
         (event.target.closest('p') && (shiftLeft.classList.contains('active')))
@@ -581,10 +618,10 @@ function inputText(event) {
       ) {
         if (!event.target.parentElement.firstChild.textContent) {
           showCursor();
-          areaText.value += event.target.parentElement.lastChild.textContent.toUpperCase();
+          addTextInCurrentArea(event.target.parentElement.lastChild.textContent.toUpperCase());
         } else {
           showCursor();
-          areaText.value += event.target.parentElement.firstChild.textContent;
+          addTextInCurrentArea(event.target.parentElement.firstChild.textContent);
         }
       }
     } else {
@@ -592,14 +629,14 @@ function inputText(event) {
         (event.target.classList.contains('key') && (!shiftLeft.classList.contains('active')))
         && (event.target.classList.contains('key') && (!shiftRight.classList.contains('active')))
       ) {
-        areaText.value += event.target.lastChild.textContent;
         showCursor();
+        addTextInCurrentArea(event.target.lastChild.textContent);
       } else if (
         (event.target.closest('p') && (!shiftLeft.classList.contains('active')))
         && (event.target.closest('p') && (!shiftRight.classList.contains('active')))
       ) {
         showCursor();
-        areaText.value += event.target.parentElement.lastChild.textContent;
+        addTextInCurrentArea(event.target.parentElement.lastChild.textContent);
       }
 
       if (
@@ -608,10 +645,10 @@ function inputText(event) {
       ) {
         if (!event.target.firstChild.textContent) {
           showCursor();
-          areaText.value += event.target.lastChild.textContent.toLowerCase();
+          addTextInCurrentArea(event.target.lastChild.textContent.toLowerCase());
         } else {
           showCursor();
-          areaText.value += event.target.firstChild.textContent;
+          addTextInCurrentArea(event.target.firstChild.textContent);
         }
       } else if (
         (event.target.closest('p') && (shiftLeft.classList.contains('active')))
@@ -619,10 +656,10 @@ function inputText(event) {
       ) {
         if (!event.target.parentElement.firstChild.textContent) {
           showCursor();
-          areaText.value += event.target.parentElement.lastChild.textContent.toLowerCase();
+          addTextInCurrentArea(event.target.parentElement.lastChild.textContent.toLowerCase());
         } else {
           showCursor();
-          areaText.value += event.target.parentElement.firstChild.textContent;
+          addTextInCurrentArea(event.target.parentElement.firstChild.textContent);
         }
       }
     }
@@ -631,7 +668,7 @@ function inputText(event) {
 
 keyBoard.addEventListener('mousedown', inputText);
 
-// Add value in textarea use keyboard
+// input text in textarea use keyboard
 document.addEventListener('keydown', (event) => {
   event.preventDefault();
   if (!(arrDataSpecial.includes(event.code))) {
@@ -641,14 +678,17 @@ document.addEventListener('keydown', (event) => {
           el.dataset.special === event.code && (!shiftLeft.classList.contains('active'))
           && (!shiftRight.classList.contains('active'))
         ) {
+          showCursor();
           addTextInCurrentArea(el.lastChild.textContent.toLowerCase());
         } else if (
           (el.dataset.special === event.code && (shiftLeft.classList.contains('active')))
           || (el.dataset.special === event.code && (shiftRight.classList.contains('active')))
         ) {
           if (!el.firstChild.textContent) {
+            showCursor();
             addTextInCurrentArea(el.lastChild.textContent.toUpperCase());
           } else {
+            showCursor();
             addTextInCurrentArea(el.firstChild.textContent);
           }
         }
@@ -660,14 +700,17 @@ document.addEventListener('keydown', (event) => {
           && (!shiftLeft.classList.contains('active'))
           && (!shiftLeft.classList.contains('active'))
         ) {
+          showCursor();
           addTextInCurrentArea(el.lastChild.textContent.toUpperCase());
         } else if (
           (el.dataset.special === event.code && (shiftLeft.classList.contains('active')))
           || (el.dataset.special === event.code && (shiftRight.classList.contains('active')))
         ) {
           if (!el.firstChild.textContent) {
+            showCursor();
             addTextInCurrentArea(el.lastChild.textContent.toLowerCase());
           } else {
+            showCursor();
             addTextInCurrentArea(el.firstChild.textContent.toLowerCase());
           }
         }
