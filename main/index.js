@@ -296,6 +296,7 @@ function createContentKeys() {
   }
 }
 
+const keyBoard = document.querySelector('.list');
 const areaText = document.getElementById('area-text');
 const showCursor = () => {
   setTimeout(() => {
@@ -316,6 +317,26 @@ function doubleKeys(func, ...buttons) {
     }
     pressing.clear();
     func();
+  });
+  keyBoard.addEventListener('mousedown', (e) => {
+    if (e.target.dataset.special === 'ControlLeft' || e.target.dataset.special === 'AltLeft') {
+      pressing.add(e.target.dataset.special);
+      for (let i = 0; i < buttons.length; i += 1) {
+        if (!pressing.has(buttons[i])) {
+          return;
+        }
+      }
+    } else if (e.target.parentElement.dataset.special === 'ControlLeft' || e.target.parentElement.dataset.special === 'AltLeft') {
+      pressing.add(e.target.parentElement.dataset.special);
+      for (let i = 0; i < buttons.length; i += 1) {
+        if (!pressing.has(buttons[i])) {
+          return;
+        }
+      }
+    }
+  });
+  document.addEventListener('mouseup', () => {
+    pressing.clear();
   });
   document.addEventListener('keyup', () => {
     pressing.clear();
@@ -356,6 +377,49 @@ function changeLanguage() {
 
 doubleKeys(changeLanguage, 'ControlLeft', 'AltLeft');
 
+// change language use keyboard
+let pressed = [];
+let count = 0;
+const ctrl = document.querySelector('.controlLeft');
+const alt = document.querySelector('.altLeft');
+
+function changeLangForMouse(event) {
+  const buttons = ['ControlLeft', 'AltLeft'];
+  if ((event.target.dataset.special === 'ControlLeft') || (event.target.dataset.special === 'AltLeft')) {
+    pressed.push(event.target.dataset.special);
+    if (event.target.dataset.special === 'ControlLeft') {
+      ctrl.classList.add('active');
+    } else {
+      alt.classList.add('active');
+    }
+  } else if ((event.target.parentElement.dataset.special === 'ControlLeft') || (event.target.parentElement.dataset.special === 'AltLeft')) {
+    pressed.push(event.target.parentElement.dataset.special);
+    if (event.target.parentElement.dataset.special === 'ControlLeft') {
+      ctrl.classList.add('active');
+    } else {
+      alt.classList.add('active');
+    }
+  }
+  for (let i = 0; i < buttons.length; i += 1) {
+    if (pressed.includes(buttons[i])) {
+      count += 1;
+    } else {
+      count = 0;
+      return;
+    }
+  }
+
+  if (count === 2) {
+    changeLanguage();
+    ctrl.classList.remove('active');
+    alt.classList.remove('active');
+    pressed = [];
+    count = 0;
+  }
+}
+
+keyBoard.addEventListener('dblclick', changeLangForMouse);
+
 // add focus for buttons
 document.addEventListener('keydown', (event) => {
   event.preventDefault();
@@ -377,7 +441,6 @@ document.addEventListener('keydown', (event) => {
 });
 
 // add class 'active' for click
-const keyBoard = document.querySelector('.list');
 const shiftLeft = document.querySelector('.shiftLeft');
 const shiftRight = document.querySelector('.shiftRight');
 const capsLock = document.querySelector('.capsLock');
@@ -487,20 +550,16 @@ keyBoard.addEventListener('dblclick', clickMouseShiftRightDouble);
 // function for add text in current cursor value
 function addTextInCurrentArea(text) {
   const start = areaText.selectionStart;
-  const end = areaText.selectionEnd;
+  const end = areaText.selectionStart;
   const finishText = `${areaText.value.substring(0, start)}${text}${areaText.value.substring(end)}`;
   areaText.value = finishText;
-  if (start === end) {
-    areaText.selectionEnd = end + text.length;
-  } else {
-    areaText.selectionEnd = end;
-  }
+  areaText.selectionEnd = end + text.length;
 }
 
 // function for delete text befor cursor use mouse
 function deleteElUseBackspace() {
   const start = areaText.selectionStart;
-  const end = areaText.selectionEnd;
+  const end = areaText.selectionStart;
   const finishText = `${areaText.value.substring(0, start - 1)}${areaText.value.substring(end)}`;
   areaText.value = finishText;
   if (start === end) {
@@ -510,19 +569,26 @@ function deleteElUseBackspace() {
   }
 }
 
-// function for Backspace use mouse
+// function for Backspace
 function funcBacksspace(event) {
-  if (event.target.dataset.special === 'Backspace' || event.target.parentElement.dataset.special === 'Backspace') {
+  if (
+    event.target.dataset.special === 'Backspace'
+    || event.target.parentElement.dataset.special === 'Backspace'
+    || event.code === 'Backspace') {
     showCursor();
     deleteElUseBackspace();
   }
 }
 
 keyBoard.addEventListener('mousedown', funcBacksspace);
+document.addEventListener('keydown', funcBacksspace);
 
 // function for Tab
 function funcTab(event) {
-  if (event.target.dataset.special === 'Tab' || event.target.parentElement.dataset.special === 'Tab') {
+  if (
+    event.target.dataset.special === 'Tab'
+    || event.target.parentElement.dataset.special === 'Tab'
+    || event.code === 'Tab') {
     showCursor();
     const tab = '  ';
     addTextInCurrentArea(tab);
@@ -530,8 +596,9 @@ function funcTab(event) {
 }
 
 keyBoard.addEventListener('mousedown', funcTab);
+document.addEventListener('keydown', funcTab);
 
-// function for delete text after cursor use mouse
+// function for delete text after cursor
 function deleteElUseDel() {
   const start = areaText.selectionStart;
   const end = areaText.selectionEnd;
@@ -542,17 +609,25 @@ function deleteElUseDel() {
 
 // function for Del
 function funcDel(event) {
-  if (event.target.dataset.special === 'Delete' || event.target.parentElement.dataset.special === 'Delete') {
+  if (
+    event.target.dataset.special === 'Delete'
+    || event.target.parentElement.dataset.special === 'Delete'
+    || event.code === 'Delete') {
     showCursor();
     deleteElUseDel();
   }
 }
 
 keyBoard.addEventListener('mousedown', funcDel);
+document.addEventListener('keydown', funcDel);
 
 // function for Enter
 function funcEnter(event) {
-  if (event.target.dataset.special === 'Enter' || event.target.parentElement.dataset.special === 'Enter') {
+  if (
+    event.target.dataset.special === 'Enter'
+    || event.target.parentElement.dataset.special === 'Enter'
+    || event.code === 'Enter'
+  ) {
     const ent = '\n';
     showCursor();
     addTextInCurrentArea(ent);
@@ -560,6 +635,7 @@ function funcEnter(event) {
 }
 
 keyBoard.addEventListener('mousedown', funcEnter);
+document.addEventListener('keydown', funcEnter);
 
 // add 'active' class use keyboard for shift and capslock
 document.addEventListener('keydown', (event) => {
