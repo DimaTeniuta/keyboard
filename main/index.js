@@ -1,59 +1,59 @@
 const keys = {
   en: {
-    key1: ['`', '~', '~'],
-    key2: ['1', '!', '!'],
-    key3: ['2', '@', '@'],
-    key4: ['3', '#', '#'],
-    key5: ['4', '$', '$'],
-    key6: ['5', '%', '%'],
-    key7: ['6', '^', '^'],
-    key8: ['7', '&', '&'],
-    key9: ['8', '*', '*'],
-    key10: ['9', '(', '('],
-    key11: ['0', ')', ')'],
-    key12: ['-', '_', '_'],
-    key13: ['=', '+', '_'],
+    key1: ['`', '~'],
+    key2: ['1', '!'],
+    key3: ['2', '@'],
+    key4: ['3', '#'],
+    key5: ['4', '$'],
+    key6: ['5', '%'],
+    key7: ['6', '^'],
+    key8: ['7', '&'],
+    key9: ['8', '*'],
+    key10: ['9', '('],
+    key11: ['0', ')'],
+    key12: ['-', '_'],
+    key13: ['=', '+'],
     key14: ['Backspace', ''],
     key15: ['Tab', ''],
-    key16: ['Q', '', 'Q'],
-    key17: ['W', '', 'W'],
-    key18: ['E', '', 'E'],
-    key19: ['R', '', 'R'],
-    key20: ['T', '', 'T'],
-    key21: ['Y', '', 'Y'],
-    key22: ['U', '', 'U'],
-    key23: ['I', '', 'I'],
-    key24: ['O', '', 'O'],
-    key25: ['P', '', 'P'],
-    key26: ['[', '{', '{'],
-    key27: [']', '}', '}'],
-    key28: ['\\', '|', '|'],
+    key16: ['Q', ''],
+    key17: ['W', ''],
+    key18: ['E', ''],
+    key19: ['R', ''],
+    key20: ['T', ''],
+    key21: ['Y', ''],
+    key22: ['U', ''],
+    key23: ['I', ''],
+    key24: ['O', ''],
+    key25: ['P', ''],
+    key26: ['[', '{'],
+    key27: [']', '}'],
+    key28: ['\\', '|'],
     key29: ['DEL', ''],
     key30: ['CapsLock', ''],
-    key31: ['A', '', 'A'],
-    key32: ['S', '', 'S'],
-    key33: ['D', '', 'D'],
-    key34: ['F', '', 'F'],
-    key35: ['G', '', 'G'],
-    key36: ['H', '', 'H'],
-    key37: ['J', '', 'J'],
-    key38: ['K', '', 'K'],
-    key39: ['L', '', 'L'],
-    key40: [';', ':', ':'],
-    key41: ['\u0027', '\u0022', '\u0022'],
+    key31: ['A', ''],
+    key32: ['S', ''],
+    key33: ['D', ''],
+    key34: ['F', ''],
+    key35: ['G', ''],
+    key36: ['H', ''],
+    key37: ['J', ''],
+    key38: ['K', ''],
+    key39: ['L', ''],
+    key40: [';', ':'],
+    key41: ['\u0027', '\u0022'],
     key42: ['ENTER', ''],
     key43: ['Shift', ''],
-    key44: ['\u002F', '', '\u002F'],
-    key45: ['Z', '', 'Z'],
-    key46: ['X', '', 'X'],
-    key47: ['C', '', 'C'],
-    key48: ['V', '', 'V'],
-    key49: ['B', '', 'B'],
-    key50: ['N', '', 'N'],
-    key51: ['M', '', 'M'],
-    key52: [',', '<', '<'],
-    key53: ['.', '>', '>'],
-    key54: ['/', '?', '?'],
+    key44: ['\u002F', ''],
+    key45: ['Z', ''],
+    key46: ['X', ''],
+    key47: ['C', ''],
+    key48: ['V', ''],
+    key49: ['B', ''],
+    key50: ['N', ''],
+    key51: ['M', ''],
+    key52: [',', '<'],
+    key53: ['.', '>'],
+    key54: ['/', '?'],
     key55: ['\u2191', ''],
     key56: ['Shift', ''],
     key57: ['Ctrl', ''],
@@ -67,62 +67,62 @@ const keys = {
     key65: ['\u2192', ''],
   },
   ru: {
-    key1: ['Ё', '', 'Ё'],
-    key2: ['1', '!', '!'],
-    key3: ['2', '\u0022', '\u0022'],
-    key4: ['3', '№', '№'],
-    key5: ['4', ';', ';'],
-    key6: ['5', '%', '%'],
-    key7: ['6', ':', ':'],
-    key8: ['7', '?', '?'],
-    key9: ['8', '*', '*'],
-    key10: ['9', '(', '('],
-    key11: ['0', ')', ')'],
-    key12: ['-', '_', '_'],
-    key13: ['=', '+', '+'],
+    key1: ['Ё', ''],
+    key2: ['1', '!'],
+    key3: ['2', '\u0022'],
+    key4: ['3', '№'],
+    key5: ['4', ';'],
+    key6: ['5', '%'],
+    key7: ['6', ':'],
+    key8: ['7', '?'],
+    key9: ['8', '*'],
+    key10: ['9', '('],
+    key11: ['0', ')'],
+    key12: ['-', '_'],
+    key13: ['=', '+'],
     key14: ['Backspace', ''],
     key15: ['Tab', ''],
-    key16: ['Й', '', 'Й'],
-    key17: ['Ц', '', 'Ц'],
-    key18: ['У', '', 'У'],
-    key19: ['К', '', 'К'],
-    key20: ['Е', '', 'Е'],
-    key21: ['Н', '', 'Н'],
-    key22: ['Г', '', 'Г'],
-    key23: ['Ш', '', 'Ш'],
-    key24: ['Щ', '', 'Щ'],
-    key25: ['З', '', 'З'],
-    key26: ['Х', '', 'Х'],
-    key27: ['Ъ', '', 'Ъ'],
-    key28: ['\\', '/', '/'],
+    key16: ['Й', ''],
+    key17: ['Ц', ''],
+    key18: ['У', ''],
+    key19: ['К', ''],
+    key20: ['Е', ''],
+    key21: ['Н', ''],
+    key22: ['Г', ''],
+    key23: ['Ш', ''],
+    key24: ['Щ', ''],
+    key25: ['З', ''],
+    key26: ['Х', ''],
+    key27: ['Ъ', ''],
+    key28: ['\\', '/'],
     key29: ['DEL', ''],
     key30: ['CapsLock', ''],
-    key31: ['Ф', '', 'Ф'],
-    key32: ['Ы', '', 'Ы'],
-    key33: ['В', '', 'В'],
-    key34: ['А', '', 'А'],
-    key35: ['П', '', 'П'],
-    key36: ['Р', '', 'Р'],
-    key37: ['О', '', 'О'],
-    key38: ['Л', '', 'Л'],
-    key39: ['Д', '', 'Д'],
-    key40: ['Ж', '', 'Ж'],
-    key41: ['Э', '', 'Э'],
+    key31: ['Ф', ''],
+    key32: ['Ы', ''],
+    key33: ['В', ''],
+    key34: ['А', ''],
+    key35: ['П', ''],
+    key36: ['Р', ''],
+    key37: ['О', ''],
+    key38: ['Л', ''],
+    key39: ['Д', ''],
+    key40: ['Ж', ''],
+    key41: ['Э', ''],
     key42: ['ENTER', ''],
-    key43: ['Shift', '', '', 'ShiftLeft'],
-    key44: ['/', '', '/'],
-    key45: ['Я', '', 'Я'],
-    key46: ['Ч', '', 'Ч'],
-    key47: ['С', '', 'С'],
-    key48: ['М', '', 'М'],
-    key49: ['И', '', 'И'],
-    key50: ['Т', '', 'Т'],
-    key51: ['Ь', '', 'Ь'],
-    key52: ['Б', '', 'Б'],
-    key53: ['Ю', '', 'Ю'],
-    key54: ['.', ',', ','],
+    key43: ['Shift', ''],
+    key44: ['/', ''],
+    key45: ['Я', ''],
+    key46: ['Ч', ''],
+    key47: ['С', ''],
+    key48: ['М', ''],
+    key49: ['И', ''],
+    key50: ['Т', ''],
+    key51: ['Ь', ''],
+    key52: ['Б', ''],
+    key53: ['Ю', ''],
+    key54: ['.', ','],
     key55: ['\u2191', ''],
-    key56: ['Shift', '', '', 'ShiftRight'],
+    key56: ['Shift', ''],
     key57: ['Ctrl', ''],
     key58: ['Win', ''],
     key59: ['Alt', ''],
@@ -134,11 +134,13 @@ const keys = {
     key65: ['\u2192', ''],
   },
 };
+
 const dataKeys = ['Backquote', 'Digit1', 'Digit2', 'Digit3', 'Digit4', 'Digit5', 'Digit6', 'Digit7', 'Digit8', 'Digit9', 'Digit0', 'Minus', 'Equal', 'Backspace', 'Tab', 'KeyQ', 'KeyW', 'KeyE', 'KeyR', 'KeyT', 'KeyY', 'KeyU', 'KeyI', 'KeyO', 'KeyP', 'BracketLeft', 'BracketRight', 'Backslash', 'Delete', 'CapsLock', 'KeyA', 'KeyS', 'KeyD', 'KeyF', 'KeyG', 'KeyH', 'KeyJ', 'KeyK', 'KeyL', 'Semicolon', 'Quote', 'Enter', 'ShiftLeft', 'NumpadDivide', 'KeyZ', 'KeyX', 'KeyC', 'KeyV', 'KeyB', 'KeyN', 'KeyM', 'Comma', 'Period', 'Slash', 'ArrowUp', 'ShiftRight', 'ControlLeft', 'MetaLeft', 'AltLeft', 'Space', 'AltRight', 'ControlRight', 'ArrowLeft', 'ArrowDown', 'ArrowRight'];
 const body = document.querySelector('body');
 let counKeys = 1;
 let isEn = true;
 
+// fuction for create page
 function createContent() {
   // craate title
   const container = document.createElement('div');
@@ -263,6 +265,7 @@ createContent();
 
 const listButtons = document.querySelectorAll('.key');
 
+// add data-spesial
 function addDataSetForButtons() {
   for (let i = 0; i < listButtons.length; i += 1) {
     listButtons[i].setAttribute('data-special', `${dataKeys[i]}`);
@@ -306,6 +309,7 @@ function createContentKeys() {
 
 const keyBoard = document.querySelector('.list');
 const areaText = document.getElementById('area-text');
+// add focus for textarea
 const showCursor = () => {
   setTimeout(() => {
     areaText.focus();
@@ -313,7 +317,8 @@ const showCursor = () => {
 };
 
 createContentKeys();
-// change language
+
+// change language use keyboard
 function doubleKeys(func, ...buttons) {
   const pressing = new Set();
   document.addEventListener('keydown', (event) => {
@@ -385,12 +390,12 @@ function changeLanguage() {
 
 doubleKeys(changeLanguage, 'ControlLeft', 'AltLeft');
 
-// change language use keyboard
 let pressed = [];
 let count = 0;
 const ctrl = document.querySelector('.controlLeft');
 const alt = document.querySelector('.altLeft');
 
+// change language use mouse
 function changeLangForMouse(event) {
   const buttons = ['ControlLeft', 'AltLeft'];
   if ((event.target.dataset.special === 'ControlLeft') || (event.target.dataset.special === 'AltLeft')) {
