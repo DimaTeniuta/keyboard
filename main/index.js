@@ -148,16 +148,8 @@ function createContent() {
   const h1Title = document.createElement('h1');
   h1Title.classList.add('h1-title');
   h1Title.textContent = 'Keyboard for windows';
-  const keyboardLayout = document.createElement('p');
-  keyboardLayout.classList.add('text-title');
-  keyboardLayout.textContent = '(CtrlLeft + AltLeft) - switch keyboard layout (use double click)';
-  const shiftDicribe = document.createElement('p');
-  shiftDicribe.classList.add('text-title');
-  shiftDicribe.textContent = 'ShiftLeft or ShiftRight can be used with double click.';
   body.append(container);
   title.append(h1Title);
-  title.append(shiftDicribe);
-  title.append(keyboardLayout);
   container.append(title);
   // create textarea
   const wrapArea = document.createElement('div');
@@ -250,6 +242,17 @@ function createContent() {
       listLi.classList.add('space');
     }
   }
+  const description = document.createElement('div');
+  description.classList.add('description');
+  const keyboardLayout = document.createElement('p');
+  keyboardLayout.classList.add('text-title');
+  keyboardLayout.textContent = '(CtrlLeft + AltLeft) - switch keyboard layout (use double click)';
+  const shiftDescription = document.createElement('p');
+  shiftDescription.classList.add('text-title');
+  shiftDescription.textContent = 'ShiftLeft or ShiftRight can be used with double click.';
+  container.append(description);
+  description.append(keyboardLayout);
+  description.append(shiftDescription);
 }
 createContent();
 
