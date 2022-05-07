@@ -66,7 +66,7 @@ body {
   padding: 20px;
   border-radius: 20px;
   background-color: rgb(214, 214, 214);
-  box-shadow: 10px 10px 30px #474343;
+  box-shadow: 10px 10px 30px #474343, -5px -5px 20px #ffffff;
 }
 
 .keybord {

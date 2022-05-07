@@ -558,22 +558,24 @@ keyBoard.addEventListener('dblclick', clickMouseShiftRightDouble);
 // function for add text in current cursor value
 function addTextInCurrentArea(text) {
   const start = areaText.selectionStart;
-  const end = areaText.selectionStart;
+  const end = areaText.selectionEnd;
   const finishText = `${areaText.value.substring(0, start)}${text}${areaText.value.substring(end)}`;
   areaText.value = finishText;
-  areaText.selectionEnd = end + text.length;
+  areaText.selectionEnd = start + text.length;
 }
 
-// function for delete text befor cursor use mouse
+// function for delete text befor cursor
 function deleteElUseBackspace() {
   const start = areaText.selectionStart;
-  const end = areaText.selectionStart;
-  const finishText = `${areaText.value.substring(0, start - 1)}${areaText.value.substring(end)}`;
-  areaText.value = finishText;
+  const end = areaText.selectionEnd;
   if (start === end) {
+    const finishText = `${areaText.value.substring(0, start - 1)}${areaText.value.substring(end)}`;
+    areaText.value = finishText;
     areaText.selectionEnd = end - 1;
   } else {
-    areaText.selectionEnd = end;
+    const finishText = `${areaText.value.substring(0, start)}${areaText.value.substring(end)}`;
+    areaText.value = finishText;
+    areaText.selectionEnd = start;
   }
 }
 
@@ -598,7 +600,7 @@ function funcTab(event) {
     || event.target.parentElement.dataset.special === 'Tab'
     || event.code === 'Tab') {
     showCursor();
-    const tab = '  ';
+    const tab = '    ';
     addTextInCurrentArea(tab);
   }
 }
