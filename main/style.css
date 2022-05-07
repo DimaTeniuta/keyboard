@@ -20,7 +20,7 @@ textarea:focus{
 
 :root {
 --special-background-color: #bebebe;
---background-color-hover: #b7b7b7;
+--background-color-hover: #acacac;
 }
 
 body {
@@ -66,7 +66,7 @@ body {
   padding: 20px;
   border-radius: 20px;
   background-color: rgb(214, 214, 214);
-  box-shadow: 10px 10px 30px #474343, -3px -3px 10px #ffffff;
+  box-shadow: 10px 10px 30px #474343;
 }
 
 .keybord {
@@ -142,6 +142,22 @@ body {
 .capsLock {
   width: 130px;
   background-color: var(--special-background-color);
+  position: relative;
+}
+
+.lamp {
+  width: 10px;
+  height: 10px;
+  border: 1px solid #474343;
+  border-radius: 50%;
+  background-color: rgb(126, 124, 124);
+  position: absolute;
+  top: 8px;
+  left: 120px;
+}
+
+.capsLock.active .lamp {
+  background-color: rgb(64, 255, 0);
 }
 
 .enter {

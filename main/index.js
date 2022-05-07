@@ -242,6 +242,11 @@ function createContent() {
       listLi.classList.add('space');
     }
   }
+  const lamp = document.createElement('div');
+  lamp.classList.add('lamp');
+  const caps = document.querySelector('.capsLock');
+  const lastChildCaps = caps.lastChild;
+  caps.insertBefore(lamp, lastChildCaps);
   const description = document.createElement('div');
   description.classList.add('description');
   const keyboardLayout = document.createElement('p');
