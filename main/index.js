@@ -165,12 +165,16 @@ function createContent() {
   textArea.autofocus = 'autofocus';
   textArea.name = 'area';
   textArea.id = 'area-text';
-  if (body.clientWidth < 1280) {
+  if (body.clientWidth < 1280 && body.clientWidth > 949) {
     textArea.cols = '80';
+    textArea.rows = '8';
+  } else if (body.clientWidth < 950) {
+    textArea.cols = '60';
+    textArea.rows = '6';
   } else {
     textArea.cols = '100';
+    textArea.rows = '10';
   }
-  textArea.rows = '10';
   form.append(textArea);
   wrapArea.append(textAreaDiv);
   container.append(wrapArea);

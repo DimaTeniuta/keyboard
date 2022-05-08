@@ -307,3 +307,86 @@ body {
     width: 370px;
   }
 }
+
+
+@media (max-width: 949px) {
+  textarea {
+    font-size: 14px;       
+  }
+
+  .h1-title {
+    font-size: 20px;
+  }
+
+  .wrap-keyboard {
+    max-width: 700px;
+    padding: 15px;
+  }
+  
+  .keybord {
+    max-width: 700px;
+  }
+  
+  .list {
+    gap: 10px;
+  }
+  
+  .key {
+    width: 25px;
+    height: 25px;
+    font-size: 12px;
+    border-radius: 10px;
+  }
+  
+  .content1-key {
+    font-size: 10px;
+    left: 5px
+  }
+  
+  .content2-key {
+    font-size: 14px;
+  }
+
+  .backspace {
+    width: 80px;
+  }
+  
+  .tab {
+    width: 40px;
+  }
+  
+  .delete {
+    width: 40px;
+  }
+  
+  .capsLock {
+    width: 80px;
+  }
+  
+  .lamp {
+    width: 5px;
+    height: 5px;
+    top: 4px;
+    left: 78px;
+  }
+  
+  .enter {
+    width: 80px;
+  }
+  
+  .shiftLeft {
+    width: 80px;
+  }
+  
+  .controlLeft {
+    width: 45px;
+  }
+  
+  .controlRight {
+    width: 45px;
+  }
+  
+  .space {
+    width: 270px;
+  }
+}
