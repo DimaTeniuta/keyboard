@@ -1,0 +1,389 @@
+* {
+  margin: 0;
+  padding: 0;
+  user-select: none;
+}
+
+ul li {
+  list-style: none;
+}
+
+textarea {
+  font-size: 18px;       
+}
+
+textarea:focus{
+  outline: none;
+}
+
+:root {
+--special-background-color: #bebebe;
+--background-color-hover: #cacaca;
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+  box-sizing: border-box;
+  background-color: #f4f1f1;
+}
+
+.container {
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+.title {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.h1-title {
+  font-size: 35px;
+  margin: 10px 0 0 0;
+}
+
+.text-title {
+  font-size: 24px;
+  margin: 0 0 10px 0;
+}
+
+
+.wrap-text-area {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0 30px 0;
+}
+
+.wrap-keyboard {
+  max-width: 1200px;
+  margin: 0 auto;
+  border: 1px solid #cecdcd;
+  padding: 20px;
+  border-radius: 20px;
+  background-color: rgb(214, 214, 214);
+  box-shadow: 10px 10px 30px #474343, -5px -5px 20px #ffffff;
+}
+
+.keybord {
+  max-width: 1200px;
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+}
+
+.list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.key {
+  width: 55px;
+  height: 55px;
+  border-radius: 16px;
+  padding: 5px;
+  font-size: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  background-color: rgb(214, 214, 214);
+  box-shadow: 5px 5px 10px #474343, -3px -3px 10px #ffffff;
+  transition: 0.12s;
+}
+
+.key:hover {
+  cursor: pointer;
+  background-color: var(--background-color-hover);
+}
+
+
+.content1-key {
+  font-size: 20px;
+  position: absolute;
+  top: 2px;
+  left: 10px;
+  color: #454545;
+}
+
+.content2-key {
+  font-size: 24px;
+  color: #454545;
+}
+
+.backspace {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 130px;
+  background-color: var(--special-background-color);
+}
+
+.tab {
+  width: 70px;
+  background-color: var(--special-background-color);
+}
+
+.delete {
+  width: 70px;
+  background-color: var(--special-background-color);
+}
+
+.capsLock {
+  width: 130px;
+  background-color: var(--special-background-color);
+  position: relative;
+}
+
+.lamp {
+  width: 10px;
+  height: 10px;
+  border: 1px solid #474343;
+  border-radius: 50%;
+  background-color: rgb(126, 124, 124);
+  position: absolute;
+  top: 8px;
+  left: 120px;
+}
+
+.capsLock.active .lamp {
+  background-color: rgb(64, 255, 0);
+}
+
+.enter {
+  width: 130px;
+  background-color: var(--special-background-color);
+}
+
+.shiftLeft {
+  width: 130px;
+  background-color: var(--special-background-color);
+}
+
+.shiftRight {
+  background-color: var(--special-background-color);
+}
+
+.controlLeft {
+  width: 80px;
+  background-color: var(--special-background-color);
+}
+
+.controlRight {
+  width: 80px;
+  background-color: var(--special-background-color);
+}
+
+.metaLeft {
+  background-color: var(--special-background-color);
+}
+
+.altLeft {
+  background-color: var(--special-background-color);
+}
+
+.altRight {
+  background-color: var(--special-background-color);
+}
+
+.arrowUp {
+  background-color: var(--special-background-color);
+}
+
+.arrowLeft {
+  background-color: var(--special-background-color);
+}
+
+.arrowDown {
+  background-color: var(--special-background-color);
+}
+
+.arrowRight {
+  background-color: var(--special-background-color);
+} 
+
+.space {
+  width: 490px;
+}
+
+.key.active {
+  box-shadow: 1px 1px 2px #858383, -1px -1px 2px #ffffff;
+  background-color: #cacaca;
+}
+
+.description {
+ max-width: 1280px;
+ margin: 40px auto 0 auto;
+ display: flex;
+ flex-direction: column;
+ align-items: center;
+ justify-content: center;
+}
+
+@media (max-width: 1279px) {
+  .h1-title {
+    font-size: 25px;
+  }
+  
+  .text-title {
+    font-size: 18px;
+  }
+  
+  
+  .wrap-keyboard {
+    max-width: 900px;
+  }
+  
+  .keybord {
+    max-width: 900px;
+  }
+  
+  .list {
+    gap: 10px;
+  }
+  
+  .key {
+    width: 35px;
+    height: 35px;
+    font-size: 12px;
+    border-radius: 14px;
+  }
+  
+  .content1-key {
+    font-size: 12px;
+  }
+  
+  .content2-key {
+    font-size: 16px;
+  }
+
+  .backspace {
+    width: 100px;
+  }
+  
+  .tab {
+    width: 60px;
+  }
+  
+  .delete {
+    width: 60px;
+  }
+  
+  .capsLock {
+    width: 100px;
+  }
+  
+  .lamp {
+    width: 6px;
+    height: 6px;
+    left: 95px;
+  }
+  
+  .enter {
+    width: 100px;
+  }
+  
+  .shiftLeft {
+    width: 100px;
+  }
+  
+  .controlLeft {
+    width: 60px;
+  }
+  
+  .controlRight {
+    width: 60px;
+  }
+  
+  .space {
+    width: 370px;
+  }
+}
+
+
+@media (max-width: 949px) {
+  textarea {
+    font-size: 14px;       
+  }
+
+  .h1-title {
+    font-size: 20px;
+  }
+
+  .wrap-keyboard {
+    max-width: 700px;
+    padding: 15px;
+  }
+  
+  .keybord {
+    max-width: 700px;
+  }
+  
+  .list {
+    gap: 10px;
+  }
+  
+  .key {
+    width: 25px;
+    height: 25px;
+    font-size: 12px;
+    border-radius: 10px;
+  }
+  
+  .content1-key {
+    font-size: 10px;
+    left: 5px
+  }
+  
+  .content2-key {
+    font-size: 14px;
+  }
+
+  .backspace {
+    width: 80px;
+  }
+  
+  .tab {
+    width: 40px;
+  }
+  
+  .delete {
+    width: 40px;
+  }
+  
+  .capsLock {
+    width: 80px;
+  }
+  
+  .lamp {
+    width: 5px;
+    height: 5px;
+    top: 4px;
+    left: 78px;
+  }
+  
+  .enter {
+    width: 80px;
+  }
+  
+  .shiftLeft {
+    width: 80px;
+  }
+  
+  .controlLeft {
+    width: 45px;
+  }
+  
+  .controlRight {
+    width: 45px;
+  }
+  
+  .space {
+    width: 270px;
+  }
+}
