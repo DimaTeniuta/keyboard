@@ -429,7 +429,6 @@ function changeLangForMouse(event) {
       return;
     }
   }
-
   if (count === 2) {
     changeLanguage();
     ctrl.classList.remove('active');
@@ -439,6 +438,21 @@ function changeLangForMouse(event) {
   }
 }
 
+function changeLangUseMousePlusKeyboard(event) {
+  if (pressed.includes('ControlLeft') && event.code === 'AltLeft') {
+    changeLanguage();
+    ctrl.classList.remove('active');
+    pressed = [];
+    count = 0;
+  } else if (pressed.includes('AltLeft') && event.code === 'ControlLeft') {
+    changeLanguage();
+    alt.classList.remove('active');
+    pressed = [];
+    count = 0;
+  }
+}
+
+document.addEventListener('keydown', changeLangUseMousePlusKeyboard);
 keyBoard.addEventListener('dblclick', changeLangForMouse);
 
 // add focus for buttons
