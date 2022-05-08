@@ -9,5 +9,7 @@
 * В терминале гита прописать  git config --global core.autocrlf input
 * Проверить использование ES6 фич
 * Проверить eslint на ошибки: 
+
   npm install eslint --save-dev
+  
   npm run lint

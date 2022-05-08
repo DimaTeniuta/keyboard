@@ -613,7 +613,7 @@ function funcTab(event) {
     || event.target.parentElement.dataset.special === 'Tab'
     || event.code === 'Tab') {
     showCursor();
-    const tab = '    ';
+    const tab = '\t';
     addTextInCurrentArea(tab);
   }
 }
