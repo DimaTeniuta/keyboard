@@ -165,7 +165,11 @@ function createContent() {
   textArea.autofocus = 'autofocus';
   textArea.name = 'area';
   textArea.id = 'area-text';
-  textArea.cols = '100';
+  if (body.clientWidth < 1280) {
+    textArea.cols = '80';
+  } else {
+    textArea.cols = '100';
+  }
   textArea.rows = '10';
   form.append(textArea);
   wrapArea.append(textAreaDiv);
